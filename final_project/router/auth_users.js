@@ -60,10 +60,24 @@ regd_users.post("/login", (req,res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
+  const username = req.session.authorization['username'];
   const isbn = req.params.isbn;
-  const username = req.user;
- // const decoded = jwt.verify(token, ey");  
-  res.send(JSON.stringify(username,null,4));
+  let book = books[isbn];
+  //book["reviews"] = {username :req.body.review};
+  book["reviews"][username]=req.body.review;
+  /*let keys = Object.keys(book["reviews"]);
+  for(let i = 0; i < keys.length; i++){
+    if (keys[i]==username){
+    book["reviews"][username]=req.body.review;
+    //res.send(JSON.stringify(book["reviews"][username],null,4));
+    res.send(JSON.stringify(books[isbn],null,4));
+  }else{
+    book["reviews"][username]=req.body.review;
+  }
+
+  }*/
+  res.send(JSON.stringify(books[isbn],null,4));
+  //res.send(JSON.stringify(book["reviews"],null,4));
   //return res.status(300).json({message: "Yet to be implemented"});
 });
 
