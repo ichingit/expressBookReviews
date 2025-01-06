@@ -41,9 +41,8 @@ public_users.get('/isbn/:isbn',function (req, res) {
   //res.send(JSON.stringify(books,null,4));
   //res.send(JSON.stringify(books,null,4));
   const isbn = req.params.isbn;
-  //res.send(books[isbn]);
-  //res.send(JSON.stringify(books[isbn],null,4));
-  res.send(isbn,null,4);
+  res.send(JSON.stringify(books[isbn],null,4));
+  //res.send(books[isbn],null,4);
 
   //return res.status(300).json({message: "Yet to be implemented"});
  });
