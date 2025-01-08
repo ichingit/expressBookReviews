@@ -74,11 +74,17 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 });
 
 regd_users.delete("/auth/review/:isbn", (req, res) => {
+    const username = req.session.authorization['username'];
     const isbn = req.params.isbn;
+    let book = books[isbn];
     
     if (isbn){
-        delete books[isbn];
-        res.send(`Book with the ISBN ${isbn} deleted.`);
+        if(book["reviews"][username]){
+        delete book["reviews"][username];
+        res.send(`Review for book ISBN ${isbn} by user ${username} deleted.`);
+        }else{
+           res.send(`No review for book ISBN ${isbn} by user ${username}.`); 
+        }
     }else{
         res.send("Unable to find the book!");
       }
