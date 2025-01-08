@@ -63,22 +63,14 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   const username = req.session.authorization['username'];
   const isbn = req.params.isbn;
   let book = books[isbn];
-  //book["reviews"] = {username :req.body.review};
+  if (book){
   book["reviews"][username]=req.body.review;
-  /*let keys = Object.keys(book["reviews"]);
-  for(let i = 0; i < keys.length; i++){
-    if (keys[i]==username){
-    book["reviews"][username]=req.body.review;
-    //res.send(JSON.stringify(book["reviews"][username],null,4));
-    res.send(JSON.stringify(books[isbn],null,4));
+  books[isbn] = book;
+  res.send(`Book with the ISBN ${isbn} updated.`);
   }else{
-    book["reviews"][username]=req.body.review;
+    res.send("Unable to find the book!");
   }
-
-  }*/
-  res.send(JSON.stringify(books[isbn],null,4));
-  //res.send(JSON.stringify(book["reviews"],null,4));
-  //return res.status(300).json({message: "Yet to be implemented"});
+  
 });
 
 module.exports.authenticated = regd_users;
